@@ -3,7 +3,7 @@ import * as api from "../api";
 
 // Action Creators: functions that return an action
 // action: object with a type and payload
-// since we are working with Redux thunk and async logic, we have to use async and dispatch actions
+// since we are working with Redux thunk and async logic, we have to use async/await and dispatch actions
 export const getPosts = () => async (dispatch) => {
     try {
         // fetching posts from API and then dispatching it through the action payload for the reducer to handle
