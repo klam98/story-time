@@ -4,7 +4,8 @@ const postsReducer = (posts = [], action) => {
         case "FETCH_ALL":
             return action.payload;
         case "CREATE":
-            return posts;
+            // return all of the persisted posts + the newly created post
+            return [...posts, action.payload];
         default:
             return posts;
     }
