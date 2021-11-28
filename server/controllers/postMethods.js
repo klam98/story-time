@@ -1,4 +1,5 @@
 import PostMesage from "../models/postMessage.js";
+import mongoose from "mongoose";
 
 export const getPosts = async (req, res) => {
     try {
@@ -10,7 +11,7 @@ export const getPosts = async (req, res) => {
     }
 };
 
-export const createPosts = async (req, res) => {
+export const createPost = async (req, res) => {
     // post's req.body will be grabbed from the client side via a form and then its contents will create a new PostMessage object
     const post = req.body;
     const newPost = new PostMesage(post);
@@ -21,4 +22,23 @@ export const createPosts = async (req, res) => {
     } catch (error) {
         res.status(409).json({ message: error.message }); // 409 is CONFLICT
     }
+};
+
+export const updatePost = async (req, res) => {
+    // extract the post id from the req
+    const { id: _id } = req.params;
+    // post body received from the front end
+    const post = req.body;
+
+    // check if the post id is valid and exists in MongoDB
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send(`No posts found with id: ${_id}`);
+    }
+
+    // update the post object on MongoDB
+    const updatedPost = await PostMesage.findByIdAndUpdate(_id, post, {
+        new: true,
+    });
+
+    res.json(updatedPost);
 };

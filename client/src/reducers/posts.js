@@ -6,6 +6,11 @@ const postsReducer = (posts = [], action) => {
         case "CREATE":
             // return all of the persisted posts + the newly created post
             return [...posts, action.payload];
+        case "UPDATE":
+            // if some post id from posts matches the post id from the data (payload), return the updated post
+            return posts.map((post) =>
+                post._id === action.payload._id ? action.payload : post
+            );
         default:
             return posts;
     }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
@@ -10,6 +10,7 @@ import storytime from "./images/storytime.png";
 import useStyles from "./styles";
 
 const App = () => {
+    const [currentId, setCurrentId] = useState(null);
     const classes = useStyles();
     // dispatch is a function of Redux store to trigger state changes
     const dispatch = useDispatch();
@@ -48,10 +49,13 @@ const App = () => {
                         spacing={3}
                     >
                         <Grid item xs={12} sm={7}>
-                            <Posts />
+                            <Posts setCurrentId={setCurrentId} />
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <Form />
+                            <Form
+                                currentId={currentId}
+                                setCurrentId={setCurrentId}
+                            />
                         </Grid>
                     </Grid>
                 </Container>
