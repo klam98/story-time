@@ -13,6 +13,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 
 import useStyles from "./styles";
+import placeHolderImage from "../../../assets/no-image-placeholder.png";
 
 // pass in destructured post as props
 const Post = ({ post, setCurrentId }) => {
@@ -22,7 +23,7 @@ const Post = ({ post, setCurrentId }) => {
         <Card className={classes.card}>
             <CardMedia
                 className={classes.media}
-                image={post.mediaFile}
+                image={post.mediaFile || placeHolderImage}
                 title={post.title}
             />
             <div className={classes.overlay}>
@@ -37,7 +38,7 @@ const Post = ({ post, setCurrentId }) => {
                     size="small"
                     onClick={() => setCurrentId(post._id)}
                 >
-                    <MoreHorizIcon fontSize="default" />
+                    <MoreHorizIcon fontSize="medium" />
                 </Button>
             </div>
             <div className={classes.details}>
