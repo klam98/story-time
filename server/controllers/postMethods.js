@@ -36,9 +36,11 @@ export const updatePost = async (req, res) => {
     }
 
     // update the post object on MongoDB
-    const updatedPost = await PostMesage.findByIdAndUpdate(_id, post, {
-        new: true,
-    });
+    const updatedPost = await PostMesage.findByIdAndUpdate(
+        _id,
+        { ...post, _id },
+        { new: true }
+    );
 
     res.json(updatedPost);
 };

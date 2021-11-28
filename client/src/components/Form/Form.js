@@ -38,9 +38,22 @@ const Form = ({ currentId, setCurrentId }) => {
         } else {
             dispatch(createPost(postData));
         }
+
+        // form should be cleared once a post is created/updated
+        clearForm();
     };
 
-    const clearForm = () => {};
+    const clearForm = () => {
+        // need to clear the currentId and overwrite the form state
+        setCurrentId(null);
+        setPostData({
+            creator: "",
+            title: "",
+            message: "",
+            tags: "",
+            mediaFile: "",
+        });
+    };
 
     return (
         // Paper is essentially a div with a white background
