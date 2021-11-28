@@ -7,7 +7,9 @@ const postsReducer = (posts = [], action) => {
             // return all of the persisted posts + the newly created post
             return [...posts, action.payload];
         case "UPDATE":
+        case "LIKE":
             // if some post id from posts matches the post id from the data (payload), return the updated post
+            // the logic for liking a post matches that of updating a post so we can combine both switch cases
             return posts.map((post) =>
                 post._id === action.payload._id ? action.payload : post
             );
