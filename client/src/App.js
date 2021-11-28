@@ -30,7 +30,7 @@ const App = () => {
                     variant="h2"
                     align="center"
                 >
-                    Story Time
+                    story time
                 </Typography>
                 <img
                     className={classes.image}
