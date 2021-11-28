@@ -47,15 +47,16 @@ const Post = ({ post, setCurrentId }) => {
             <div className={classes.details}>
                 <Typography variant="body2" color="textSecondary">
                     {/* map every tag in a post prepending them with a '#' and appending them with a space
-                        e.g. tags=food,eating => #food #eating similar to real social media apps */}
-                    {post.tags.map((tag) => `#${tag} `)}
+                        e.g. tags=food,eating => #food #eating similar to real social media apps.
+                        Only preprend non-empty strings */}
+                    {post.tags.map((tag) => (tag === "" ? "" : `#${tag} `))}
                 </Typography>
             </div>
             <Typography className={classes.title} variant="h5" gutterBottom>
                 {post.title}
             </Typography>
             <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="body2" color="textSecondary" component="p">
                     {post.message}
                 </Typography>
             </CardContent>
@@ -66,8 +67,7 @@ const Post = ({ post, setCurrentId }) => {
                     onClick={() => dispatch(likePost(post._id))}
                 >
                     <ThumbUpAltIcon fontSize="small" />
-                    Like
-                    {post.likeCount}
+                    &nbsp; Like &nbsp; {post.likeCount}
                 </Button>
                 <Button
                     size="small"
@@ -75,7 +75,7 @@ const Post = ({ post, setCurrentId }) => {
                     onClick={() => dispatch(deletePost(post._id))}
                 >
                     <DeleteIcon fontSize="small" />
-                    Delete
+                    &nbsp; Delete
                 </Button>
             </CardActions>
         </Card>
