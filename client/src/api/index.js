@@ -1,5 +1,9 @@
 import axios from "axios";
 
+// production url
+// const url = "https://story-time-blog.herokuapp.com/posts";
+
+// dev/testing url
 const url = "http://localhost:5000/posts";
 
 export const fetchPosts = () => axios.get(url);
