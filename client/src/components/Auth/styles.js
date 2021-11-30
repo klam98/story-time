@@ -27,4 +27,7 @@ export default makeStyles((theme) => ({
     googleButton: {
         marginBottom: theme.spacing(2),
     },
+    h5: {
+        textAlign: "center",
+    },
 }));

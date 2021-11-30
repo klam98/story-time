@@ -6,16 +6,19 @@ import {
     Grid,
     Typography,
     Container,
-    TextField,
 } from "@material-ui/core";
+import { GoogleLogin } from "react-google-login";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 import Input from "./Input";
+import Icon from "./Icon";
 
 function Auth() {
     const [showPassword, setShowPassword] = useState(false);
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const dispatch = useDispatch();
 
     const classes = useStyles();
 
@@ -31,13 +34,29 @@ function Auth() {
         setIsSignedIn((prevIsSignedIn) => !prevIsSignedIn);
     };
 
+    const googleSuccess = async (res) => {
+        // optional chaining operator '?' does not cause an error is res is not found but just sends a warning
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+
+        try {
+            dispatch({ type: "AUTH", data: { result, token } });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const googleFailure = () => {
+        console.log("Google Sign In was unsuccessful. Try again later.");
+    };
+
     return (
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography variant="h5">
+                <Typography className={classes.h5} variant="h5">
                     {isSignedIn ? "Sign Up" : "Sign In"}
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -90,7 +109,26 @@ function Auth() {
                             >
                                 {isSignedIn ? "Sign Up" : "Sign In"}
                             </Button>
-                            <Grid container justify="flex-end">
+                            <GoogleLogin
+                                clientId="1009978888626-4ua4lhopi7ftr0cvrsgohn1b826uimp1.apps.googleusercontent.com"
+                                render={(renderProps) => (
+                                    <Button
+                                        className={classes.googleButton}
+                                        color="primary"
+                                        fullWidth
+                                        onClick={renderProps.onClick}
+                                        disabled={renderProps.disabled}
+                                        startIcon={<Icon />}
+                                        variant="contained"
+                                    >
+                                        Google Sign In
+                                    </Button>
+                                )}
+                                onSuccess={googleSuccess}
+                                onFailure={googleFailure}
+                                cookiePolicy="single_host_origin"
+                            />
+                            <Grid container justifyContent="flex-end">
                                 <Button onClick={switchMode}>
                                     {isSignedIn
                                         ? "Already have an account? Sign In"
