@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import postRoutes from "./routes/posts.js";
+import userRoutes from "./routes/users.js";
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 
 // add a prefix of /posts to all routes in postRoutes
 app.use("/posts", postRoutes);
+app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello to Story Time API");
