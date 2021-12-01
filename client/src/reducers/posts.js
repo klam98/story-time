@@ -11,9 +11,7 @@ const postsReducer = (posts = [], action) => {
         case UPDATE:
             // if some post id from posts matches the post id from the data (payload), return the updated post
             // the logic for liking a post matches that of updating a post so we can combine both cases
-            return posts.map((post) =>
-                post._id === action.payload._id ? action.payload : post
-            );
+            return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
         case DELETE:
             return posts.filter((post) => post._id !== action.payload);
         default:

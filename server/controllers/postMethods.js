@@ -63,17 +63,32 @@ export const likePost = async (req, res) => {
     // extract the post id from the req
     const { id } = req.params;
 
+    // check if user is authenticated
+    if (!req.userId) {
+        return res.json({ message: "Unauthenticated" });
+    }
+
     // check if the post id is valid and exists in MongoDB
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).send(`No posts found with id: ${id}`);
     }
 
-    const updatedPost = await PostMesage.findByIdAndUpdate(
-        id,
-        // increment likeCount by 1
-        { $inc: { likeCount: 1 } },
-        { new: true }
-    );
+    const post = await PostMesage.findById(id);
+
+    // we can use index to determine whether or not the user has already liked the post
+    const index = post.likes.findIndex((id) => id === String(req.userId));
+    // user has not yet liked the post
+    if (index === -1) {
+        // like the post
+        post.likes.push(req.userId);
+    } else {
+        // unlike the post by filtering out the like from the user id
+        post.likes = post.likes.filter((id) => id !== String(req.userId));
+    }
+
+    const updatedPost = await PostMesage.findByIdAndUpdate(id, post, {
+        new: true,
+    });
 
     res.json(updatedPost);
 };

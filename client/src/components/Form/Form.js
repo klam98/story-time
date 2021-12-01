@@ -65,19 +65,15 @@ const Form = ({ currentId, setCurrentId }) => {
                 className={`${classes.root} ${classes.form}`}
                 onSubmit={handleSubmit}
             >
-                <Typography variant="h6">
-                    {currentId ? "Edit your" : "Share a"} story
-                </Typography>
+                <Typography variant="h6">{currentId ? "Edit your" : "Share a"} story</Typography>
                 <TextField
                     name="creator"
                     variant="outlined"
                     label="Creator"
                     fullWidth
                     value={postData.creator}
-                    onChange={(e) =>
-                        // ...postData means we allow every other value of postData to persist and not be overwritten
-                        setPostData({ ...postData, creator: e.target.value })
-                    }
+                    // ...postData means we allow every other value of postData to persist and not be overwritten
+                    onChange={(e) => setPostData({ ...postData, creator: e.target.value })}
                 />
                 <TextField
                     name="title"
@@ -85,9 +81,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     label="Title"
                     fullWidth
                     value={postData.title}
-                    onChange={(e) =>
-                        setPostData({ ...postData, title: e.target.value })
-                    }
+                    onChange={(e) => setPostData({ ...postData, title: e.target.value })}
                 />
                 <TextField
                     name="message"
@@ -95,9 +89,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     label="Message"
                     fullWidth
                     value={postData.message}
-                    onChange={(e) =>
-                        setPostData({ ...postData, message: e.target.value })
-                    }
+                    onChange={(e) => setPostData({ ...postData, message: e.target.value })}
                 />
                 <TextField
                     name="tags"
@@ -117,9 +109,7 @@ const Form = ({ currentId, setCurrentId }) => {
                         type="file"
                         multiple={false}
                         // convert image data into base64
-                        onDone={({ base64 }) =>
-                            setPostData({ ...postData, mediaFile: base64 })
-                        }
+                        onDone={({ base64 }) => setPostData({ ...postData, mediaFile: base64 })}
                     />
                 </div>
                 <Button

@@ -27,7 +27,5 @@ app.get("/", (req, res) => {
 // connect to MongoDB
 mongoose
     .connect(uri)
-    .then(() =>
-        app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
-    )
+    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
     .catch((error) => console.log(error));

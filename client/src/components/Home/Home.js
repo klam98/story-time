@@ -32,10 +32,7 @@ function Home() {
                         <Posts setCurrentId={setCurrentId} />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                        <Form
-                            currentId={currentId}
-                            setCurrentId={setCurrentId}
-                        />
+                        <Form currentId={currentId} setCurrentId={setCurrentId} />
                     </Grid>
                 </Grid>
             </Container>

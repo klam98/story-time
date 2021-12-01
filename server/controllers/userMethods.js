@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
-import mongoose from "mongoose";
 
 export const signUp = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
@@ -16,9 +15,7 @@ export const signUp = async (req, res) => {
 
         // check if user is submitting the correct password
         if (password !== confirmPassword) {
-            return res
-                .status(400)
-                .json({ message: "Passwords do not match, try again." });
+            return res.status(400).json({ message: "Passwords do not match, try again." });
         }
 
         // otherwise at this point, the sign up request should be valid
@@ -36,7 +33,7 @@ export const signUp = async (req, res) => {
             { expiresIn: "1h" }
         );
 
-        res.status(200).json({ result: existingUser, token });
+        res.status(201).json({ result, token });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong." }); // 500 is an undefined server error
     }
@@ -56,10 +53,7 @@ export const signIn = async (req, res) => {
 
         // check if password was incorrect/different from the password on DB
         // we need bcrypt compare since the passwords are hashed
-        const isPasswordCorrect = await bcrypt.compare(
-            password,
-            existingUser.password
-        );
+        const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Invalid credentials." });
         }

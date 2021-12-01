@@ -8,9 +8,7 @@ import storytime from "../../assets/storytime.png";
 
 function Navbar() {
     const classes = useStyles();
-    const [user, setUser] = useState(
-        JSON.parse(localStorage.getItem("profile"))
-    );
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -44,12 +42,7 @@ function Navbar() {
                 >
                     story time
                 </Typography>
-                <img
-                    className={classes.image}
-                    src={storytime}
-                    alt="storytime"
-                    height="60"
-                />
+                <img className={classes.image} src={storytime} alt="storytime" height="60" />
             </div>
             <Toolbar className={classes.toolbar}>
                 {user ? (
@@ -76,12 +69,7 @@ function Navbar() {
                     </div>
                 ) : (
                     // else display login button and link to authorization
-                    <Button
-                        component={Link}
-                        to="/auth"
-                        variant="contained"
-                        color="primary"
-                    >
+                    <Button component={Link} to="/auth" variant="contained" color="primary">
                         Sign in
                     </Button>
                 )}
