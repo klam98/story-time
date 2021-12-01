@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 import Post from "./Post/Post";
@@ -12,7 +12,12 @@ const Posts = ({ setCurrentId }) => {
     return (
         // if there are no posts, displaying the loading spinner
         !posts.length ? (
-            <CircularProgress />
+            <Grid>
+                <CircularProgress />
+                <Typography className={classes.loadingText} variant="h5">
+                    Loading stories from the server...
+                </Typography>
+            </Grid>
         ) : (
             <Grid
                 className={classes.mainContainer}

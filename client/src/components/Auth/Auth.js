@@ -15,24 +15,46 @@ import { useNavigate } from "react-router-dom";
 import useStyles from "./styles";
 import Input from "./Input";
 import Icon from "./Icon";
+import { signUp, signIn } from "../../actions/auth";
+
+const formInitialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+};
 
 function Auth() {
     const [showPassword, setShowPassword] = useState(false);
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSigningUp, setIsSigningUp] = useState(false);
+    const [formData, setFormData] = useState(formInitialState);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const classes = useStyles();
 
-    const handleSubmit = () => {};
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    const handleChange = () => {};
+        // 2 different types of submit, sign up and sign in:
+        if (isSigningUp) {
+            dispatch(signUp(formData, navigate));
+        } else {
+            dispatch(signIn(formData, navigate));
+        }
+    };
+
+    const handleChange = (e) => {
+        // keep formData properties but just change the event target's name to the user input value
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
     const switchMode = () => {
-        setIsSignedIn((prevIsSignedIn) => !prevIsSignedIn);
+        setIsSigningUp((prevIsSigningUp) => !prevIsSigningUp);
     };
 
     const googleSuccess = async (res) => {
@@ -59,15 +81,15 @@ function Auth() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography className={classes.h5} variant="h5">
-                    {isSignedIn ? "Sign Up" : "Sign In"}
+                    {isSigningUp ? "Sign Up" : "Sign In"}
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
-                            {isSignedIn && (
+                            {isSigningUp && (
                                 <>
                                     <Input
                                         name="firstName"
                                         label="First Name"
-                                        onChange={handleChange}
+                                        handleChange={handleChange}
                                         autoFocus
                                         half
                                     />
@@ -75,7 +97,7 @@ function Auth() {
                                     <Input
                                         name="lastName"
                                         label="Last Name"
-                                        onChange={handleChange}
+                                        handleChange={handleChange}
                                         half
                                     />
                                 </>
@@ -94,7 +116,7 @@ function Auth() {
                                 type={showPassword ? "text" : "password"}
                                 handleShowPassword={handleShowPassword}
                             />
-                            {isSignedIn && (
+                            {isSigningUp && (
                                 <Input
                                     name="confirmPassword"
                                     label="Repeat Password"
@@ -109,7 +131,7 @@ function Auth() {
                                 color="primary"
                                 className={classes.submit}
                             >
-                                {isSignedIn ? "Sign Up" : "Sign In"}
+                                {isSigningUp ? "Sign Up" : "Sign In"}
                             </Button>
                             <GoogleLogin
                                 clientId="1009978888626-4ua4lhopi7ftr0cvrsgohn1b826uimp1.apps.googleusercontent.com"
@@ -132,7 +154,7 @@ function Auth() {
                             />
                             <Grid container justifyContent="flex-end">
                                 <Button onClick={switchMode}>
-                                    {isSignedIn
+                                    {isSigningUp
                                         ? "Already have an account? Sign In"
                                         : "Don't have an account? Sign Up"}
                                 </Button>
