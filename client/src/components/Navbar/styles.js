@@ -36,8 +36,10 @@ export default makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
     },
-    purple: {
+    initials: {
         color: theme.palette.getContrastText(deepPurple[500]),
         backgroundColor: deepPurple[500],
+        width: "45px",
+        height: "45px",
     },
 }));
