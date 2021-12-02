@@ -77,7 +77,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 onSubmit={handleSubmit}
             >
                 <Typography variant="h6">
-                    {currentId ? `Editing "${postData.title}"` : "Share a story"}
+                    {currentId ? "Editing your story" : "Share a story"}
                 </Typography>
                 <TextField
                     name="title"
