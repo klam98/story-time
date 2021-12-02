@@ -54,19 +54,19 @@ function Navbar() {
                 <img className={classes.image} src={storytime} alt="storytime" height="60" />
             </div>
             <Toolbar className={classes.toolbar}>
-                {user ? (
+                {user?.result ? (
                     // if user is logged in display relevant info and logout button
                     <div className={classes.profile}>
                         <Avatar
                             className={classes.initials}
-                            alt={user.result.name}
-                            src={user.result.imageUrl}
+                            alt={user?.result.name}
+                            src={user?.result.imageUrl}
                         >
                             {/* get first letter of first name and first letter of last name */}
-                            {user.result.name.charAt(0) + user.result.name.split(" ")[1][0]}
+                            {user?.result.name.charAt(0) + user?.result.name.split(" ")[1][0]}
                         </Avatar>
                         <Typography className={classes.userName} variant="h6">
-                            {user.result.name}
+                            {user?.result.name}
                         </Typography>
                         <Button
                             className={classes.logout}

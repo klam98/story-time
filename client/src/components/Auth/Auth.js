@@ -9,6 +9,7 @@ import useStyles from "./styles";
 import Input from "./Input";
 import Icon from "./Icon";
 import { signUp, signIn } from "../../actions/auth";
+import { AUTH } from "../../constants/actionTypes";
 
 const formInitialState = {
     firstName: "",
@@ -57,7 +58,7 @@ function Auth() {
         const token = res?.tokenId;
 
         try {
-            dispatch({ type: "AUTH", data: { result, token } });
+            dispatch({ type: AUTH, data: { result, token } });
             navigate("/");
         } catch (error) {
             console.log(error);

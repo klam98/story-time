@@ -76,7 +76,9 @@ const Form = ({ currentId, setCurrentId }) => {
                 className={`${classes.root} ${classes.form}`}
                 onSubmit={handleSubmit}
             >
-                <Typography variant="h6">{currentId ? "Edit your" : "Share a"} story</Typography>
+                <Typography variant="h6">
+                    {currentId ? `Editing "${postData.title}"` : "Share a story"}
+                </Typography>
                 <TextField
                     name="title"
                     variant="outlined"
