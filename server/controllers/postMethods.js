@@ -14,7 +14,12 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req, res) => {
     // post's req.body will be grabbed from the client side via a form and then its contents will create a new PostMessage object
     const post = req.body;
-    const newPost = new PostMesage(post);
+    // server can now specify which user id create any given post
+    const newPost = new PostMesage({
+        ...post,
+        creator: req.userId,
+        createdAt: new Date().toISOString(),
+    });
 
     try {
         await newPost.save();
@@ -36,11 +41,7 @@ export const updatePost = async (req, res) => {
     }
 
     // update the post object on MongoDB
-    const updatedPost = await PostMesage.findByIdAndUpdate(
-        _id,
-        { ...post, _id },
-        { new: true }
-    );
+    const updatedPost = await PostMesage.findByIdAndUpdate(_id, { ...post, _id }, { new: true });
 
     res.json(updatedPost);
 };

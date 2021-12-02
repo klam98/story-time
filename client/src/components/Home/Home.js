@@ -9,7 +9,7 @@ import { fetchPosts } from "../../actions/posts";
 import useStyles from "./styles";
 
 function Home() {
-    const [currentId, setCurrentId] = useState(null);
+    const [currentId, setCurrentId] = useState(0);
     const classes = useStyles();
     // dispatch is a function of Redux store to trigger state changes
     const dispatch = useDispatch();

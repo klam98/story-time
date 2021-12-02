@@ -6,6 +6,15 @@ import axios from "axios";
 // dev/testing url
 const API = axios.create({ baseURL: "http://localhost:5000" });
 
+// have to send token back to our server and middleware to verify if the user is logged in
+API.interceptors.request.use((req) => {
+    if (localStorage.getItem("profile")) {
+        req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token}`;
+    }
+
+    return req;
+});
+
 // posts
 export const fetchPosts = () => API.get("/posts");
 export const createPost = (newPost) => API.post("/posts", newPost);
