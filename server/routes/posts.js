@@ -12,9 +12,9 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
+router.get("/:id", getPost);
 router.get("/", getPosts);
 router.get("/search?", getPostsBySearch);
-router.get("/:id", getPost);
 
 // it makes sense for all users to getPosts, but you should be logged in to create your own post
 // by callnig auth before a controller method, the method will then have access to populated data

@@ -19,7 +19,6 @@ function Home() {
     // dispatch is a function of Redux store to trigger state changes
     const dispatch = useDispatch();
     const classes = useStyles();
-    const location = useLocation();
     const navigate = useNavigate();
     const query = useQuery();
     const page = query.get("page") || 1;
@@ -97,9 +96,12 @@ function Home() {
                             </Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        <Paper elevation={6}>
-                            <Paginate page={page} />
-                        </Paper>
+                        {/* don't show pagination if the user is searching for stories via query */}
+                        {!searchQuery && !tags.length && (
+                            <Paper elevation={6} className={classes.pagination}>
+                                <Paginate page={page} />
+                            </Paper>
+                        )}
                     </Grid>
                 </Grid>
             </Container>

@@ -11,7 +11,7 @@ export default makeStyles((theme) => ({
     actionDiv: {
         textAlign: "center",
     },
-    loadingText: {
+    notifyUserText: {
         color: "white",
     },
 }));

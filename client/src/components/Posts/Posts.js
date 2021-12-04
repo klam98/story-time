@@ -1,22 +1,41 @@
 import React from "react";
 import { Grid, CircularProgress, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import Post from "./Post/Post";
 import useStyles from "./styles";
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 const Posts = ({ setCurrentId }) => {
-    const { posts } = useSelector((state) => state.posts);
-    console.log(posts);
+    const { posts, isLoading } = useSelector((state) => state.posts);
     const classes = useStyles();
+    const query = useQuery();
+    const searchQuery = query.get("searchQuery");
+    let tagsQuery = query.get("tags");
+
+    if (!posts.length && !isLoading) {
+        if (!tagsQuery) {
+            tagsQuery = "none";
+        }
+
+        return (
+            <Typography className={classes.notifyUserText} variant="h4">
+                {`No stories found with story title: "${searchQuery}" or with tags: "${tagsQuery}".`}
+            </Typography>
+        );
+    }
 
     return (
         // if there are no posts, displaying the loading spinner
-        !posts?.length ? (
+        isLoading ? (
             <Grid>
                 <CircularProgress />
-                <Typography className={classes.loadingText} variant="h5">
-                    Loading stories from the server...
+                <Typography className={classes.notifyUserText} variant="h5">
+                    Loading stories... please wait.
                 </Typography>
             </Grid>
         ) : (

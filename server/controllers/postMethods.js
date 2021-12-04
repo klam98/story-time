@@ -1,6 +1,18 @@
 import PostMessage from "../models/postMessage.js";
 import mongoose from "mongoose";
 
+// PARAMS -> /posts/:id -> e.g. /posts/123 -> id=123
+export const getPost = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const post = await PostMessage.findById(id);
+        res.status(200).json(post); // 200 is OK
+    } catch (error) {
+        res.status(404).json({ message: error.message }); // 404 is NOT FOUND
+    }
+};
+
 export const getPosts = async (req, res) => {
     // req.query is passed in from the query on the front-end
     const { page } = req.query;
@@ -41,18 +53,6 @@ export const getPostsBySearch = async (req, res) => {
         res.json({ data: posts });
     } catch (error) {
         res.status(404).json({ message: error.message });
-    }
-};
-
-// PARAMS -> /posts/:id -> e.g. /posts/123 -> id=123
-export const getPost = async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const postMessages = await PostMessage.findById(id);
-        res.status(200).json(postMessages); // 200 is OK
-    } catch (error) {
-        res.status(404).json({ message: error.message }); // 404 is NOT FOUND
     }
 };
 
