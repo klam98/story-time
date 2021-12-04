@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import jwt_deocde from "jwt-decode";
 
 import useStyles from "./styles";
-import storytime from "../../assets/storytime.png";
+import storytime from "../../assets/storytime-logo.png";
 import { LOGOUT } from "../../constants/actionTypes";
 
 function Navbar() {
@@ -49,9 +49,9 @@ function Navbar() {
                     variant="h2"
                     align="center"
                 >
-                    story time
+                    Story Time
                 </Typography>
-                <img className={classes.image} src={storytime} alt="storytime" height="60" />
+                <img className={classes.image} src={storytime} alt="storytime" height="65" />
             </div>
             <Toolbar className={classes.toolbar}>
                 {user?.result ? (

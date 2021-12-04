@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from "@material-ui/core";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -7,7 +7,7 @@ import ChipInput from "material-ui-chip-input";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import Paginate from "../Paginate";
-import { getPosts, getPostsBySearch } from "../../actions/posts";
+import { getPostsBySearch } from "../../actions/posts";
 // we can name useStyles alias directly since it comes from a default export
 import useStyles from "./styles";
 
@@ -28,10 +28,6 @@ function Home() {
     const [currentId, setCurrentId] = useState(0);
     const [search, setSearch] = useState("");
     const [tags, setTags] = useState([]);
-
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [currentId, dispatch]);
 
     const searchPost = () => {
         if (search.trim() || tags) {
@@ -102,7 +98,7 @@ function Home() {
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                         <Paper elevation={6}>
-                            <Paginate />
+                            <Paginate page={page} />
                         </Paper>
                     </Grid>
                 </Grid>

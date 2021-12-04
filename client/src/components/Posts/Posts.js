@@ -6,12 +6,13 @@ import Post from "./Post/Post";
 import useStyles from "./styles";
 
 const Posts = ({ setCurrentId }) => {
-    const posts = useSelector((state) => state.posts);
+    const { posts } = useSelector((state) => state.posts);
+    console.log(posts);
     const classes = useStyles();
 
     return (
         // if there are no posts, displaying the loading spinner
-        !posts.length ? (
+        !posts?.length ? (
             <Grid>
                 <CircularProgress />
                 <Typography className={classes.loadingText} variant="h5">
@@ -19,14 +20,9 @@ const Posts = ({ setCurrentId }) => {
                 </Typography>
             </Grid>
         ) : (
-            <Grid
-                className={classes.mainContainer}
-                container
-                alignItems="stretch"
-                spacing={3}
-            >
-                {posts.map((post) => (
-                    <Grid key={post._id} item xs={12} sm={6}>
+            <Grid className={classes.mainContainer} container alignItems="stretch" spacing={3}>
+                {posts?.map((post) => (
+                    <Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
                         <Post post={post} setCurrentId={setCurrentId} />
                     </Grid>
                 ))}
