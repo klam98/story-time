@@ -21,4 +21,4 @@ const Paginate = () => {
     );
 };
 
-export default Pagination;
+export default Paginate;

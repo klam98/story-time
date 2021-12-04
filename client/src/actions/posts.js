@@ -1,6 +1,6 @@
 // import everything from api since we'll be making a lot of calls exported from the api
-import * as api from "../api";
-import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
+import * as api from "../api/index";
+import { FETCH_ALL, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 
 // Action Creators: functions that return an action
 // action: object with a type and payload
@@ -17,9 +17,12 @@ export const getPosts = () => async (dispatch) => {
 
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
-        const { data } = await api.getPostsBySearch(searchQuery);
-        console.log(data);
-        // dispatch({ type: FETCH_ALL, payload: data });
+        // need to destructure data twice here, first for the axios request
+        // second because we returned data as a json object from the backend
+        const {
+            data: { data },
+        } = await api.getPostsBySearch(searchQuery.search, searchQuery.tags);
+        dispatch({ type: FETCH_BY_SEARCH, payload: data });
     } catch (error) {
         console.log(error);
     }

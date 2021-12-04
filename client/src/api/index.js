@@ -17,9 +17,9 @@ API.interceptors.request.use((req) => {
 
 // posts
 export const getPosts = () => API.get("/posts");
-export const getPostsBySearch = (searchQuery) => {
+export const getPostsBySearch = (search, tags) => {
     // user searchQuery to grab the search term along with any given tags
-    API.get(`/posts/search?searchQuery=${searchQuery.search || "none"}&tags=${searchQuery.tags}`);
+    return API.get(`/posts/search?searchQuery=${search || "none"}&tags=${tags}`);
 };
 export const createPost = (newPost) => API.post("/posts", newPost);
 export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);

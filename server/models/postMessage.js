@@ -18,7 +18,7 @@ const postSchema = mongoose.Schema({
     },
 });
 
-const PostMesage = mongoose.model("PostMessage", postSchema);
+const PostMessage = mongoose.model("PostMessage", postSchema);
 
 // exporting mongoose model from postMessage, so we can later use commands such as find, create, delete, update etc.
-export default PostMesage;
+export default PostMessage;

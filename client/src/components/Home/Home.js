@@ -6,7 +6,7 @@ import ChipInput from "material-ui-chip-input";
 
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
-import Pagination from "../Pagination";
+import Paginate from "../Paginate";
 import { getPosts, getPostsBySearch } from "../../actions/posts";
 // we can name useStyles alias directly since it comes from a default export
 import useStyles from "./styles";
@@ -16,28 +16,28 @@ function useQuery() {
 }
 
 function Home() {
-    const [currentId, setCurrentId] = useState(0);
-    const [search, setSearch] = useState("");
-    const [tags, setTags] = useState([]);
-
     // dispatch is a function of Redux store to trigger state changes
     const dispatch = useDispatch();
     const classes = useStyles();
     const location = useLocation();
     const navigate = useNavigate();
     const query = useQuery();
-
     const page = query.get("page") || 1;
     const searchQuery = query.get("searchQuery");
 
+    const [currentId, setCurrentId] = useState(0);
+    const [search, setSearch] = useState("");
+    const [tags, setTags] = useState([]);
+
     useEffect(() => {
         dispatch(getPosts());
-    }, [currentId, dispatch, location]);
+    }, [currentId, dispatch]);
 
     const searchPost = () => {
-        if (search.trim()) {
+        if (search.trim() || tags) {
             // join allows for tags: [foo, bar] => "foo,bar"
             dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
+            navigate(`/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`);
         } else {
             navigate("/");
         }
@@ -78,7 +78,7 @@ function Home() {
                                 name="search"
                                 variant="outlined"
                                 label="Search Stories"
-                                onKeyPress={handleKeyPress}
+                                onKeyDown={handleKeyPress}
                                 fullWidth
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
@@ -86,8 +86,8 @@ function Home() {
                             <ChipInput
                                 style={{ margin: "10px 0" }}
                                 value={tags}
-                                onAdd={handleAdd}
-                                onDelete={handleDelete}
+                                onAdd={(tag) => handleAdd(tag)}
+                                onDelete={(tagToDelete) => handleDelete(tagToDelete)}
                                 label="Search Tags"
                                 variant="outlined"
                             />
@@ -102,7 +102,7 @@ function Home() {
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                         <Paper elevation={6}>
-                            <Pagination />
+                            <Paginate />
                         </Paper>
                     </Grid>
                 </Grid>

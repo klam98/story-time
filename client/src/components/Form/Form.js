@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useStyles from "./styles";
 import { createPost, updatePost } from "../../actions/posts";
+import ChipInput from "material-ui-chip-input";
 
 const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
         title: "",
         message: "",
-        tags: "",
+        tags: [],
         mediaFile: "",
     });
 
@@ -36,7 +37,7 @@ const Form = ({ currentId, setCurrentId }) => {
         setPostData({
             title: "",
             message: "",
-            tags: "",
+            tags: [],
             mediaFile: "",
         });
     };
@@ -65,6 +66,15 @@ const Form = ({ currentId, setCurrentId }) => {
             </Paper>
         );
     }
+
+    const handleAdd = (tag) => {
+        setPostData({ ...postData, tags: [...postData.tags, tag] });
+    };
+
+    const handleDelete = (tagToDelete) => {
+        // remove tagToDelete from tags
+        setPostData({ ...postData, tags: postData.tags.filter((tag) => tag !== tagToDelete) });
+    };
 
     return (
         // Paper is essentially a div with a white background
@@ -97,18 +107,15 @@ const Form = ({ currentId, setCurrentId }) => {
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e.target.value })}
                 />
-                <TextField
+                <ChipInput
                     name="tags"
                     variant="outlined"
-                    label="Tags (comma-separated)"
+                    label="Tags"
                     fullWidth
                     value={postData.tags}
-                    onChange={(e) =>
-                        setPostData({
-                            ...postData,
-                            tags: e.target.value.trim().split(","),
-                        })
-                    }
+                    // remove white spaces between words of the entered tag
+                    onAdd={(tag) => handleAdd(tag.replace(/\s/g, ""))}
+                    onDelete={(tagToDelete) => handleDelete(tagToDelete)}
                 />
                 <div className={classes.fileInput}>
                     <FileBase

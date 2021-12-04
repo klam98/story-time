@@ -74,7 +74,7 @@ const Post = ({ post, setCurrentId }) => {
                     {/* map every tag in a post prepending them with a '#' and appending them with a space
                         e.g. tags=food,eating => #food #eating similar to real social media apps.
                         Only preprend non-empty strings */}
-                    {post.tags.map((tag) => (tag === "" ? "" : `#${tag} `))}
+                    {post.tags.map((tag) => `#${tag} `)}
                 </Typography>
             </div>
             <Typography className={classes.title} variant="h5" gutterBottom>
