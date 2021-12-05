@@ -36,7 +36,6 @@ export default makeStyles((theme) => ({
         width: "350px",
         alignItems: "center",
     },
-
     userName: {
         display: "flex",
         alignItems: "center",
@@ -50,5 +49,17 @@ export default makeStyles((theme) => ({
         backgroundColor: deepPurple[500],
         width: "45px",
         height: "45px",
+    },
+    github: {
+        color: "white",
+        backgroundColor: "rgba(55, 55, 65, 1)",
+        marginRight: "10px",
+        "&:hover": {
+            backgroundColor: "rgb(25, 25, 25, 1)",
+        },
+    },
+    githubIcon: {
+        width: "25px",
+        height: "25px",
     },
 }));

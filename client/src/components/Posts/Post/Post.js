@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Card,
     CardActions,
@@ -26,24 +26,37 @@ const Post = ({ post, setCurrentId }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("profile"));
+    // useState for likes for implementing responsive liking
+    const [likes, setLikes] = useState(post?.likes);
+
+    const validUserId = user?.result?.googleId || user?.result?._id;
+    const hasLikedPost = post.likes.find((like) => like === validUserId);
+
+    const handleLike = async () => {
+        dispatch(likePost(post._id));
+
+        if (hasLikedPost) {
+            setLikes(post.likes.filter((id) => id !== validUserId));
+        } else {
+            setLikes([...post.likes, validUserId]);
+        }
+    };
 
     // Likes component necessary for handling 'Like' grammar on each post
     const Likes = () => {
-        if (post.likes.length > 0) {
-            return post.likes.find(
-                (like) => like === (user?.result?.googleId || user?.result?._id)
-            ) ? (
+        if (likes.length > 0) {
+            return likes.find((like) => like === validUserId) ? (
                 <>
                     <ThumbUpAltIcon fontSize="small" />
                     &nbsp;
-                    {post.likes.length > 2
-                        ? `You and ${post.likes.length - 1} others`
-                        : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+                    {likes.length > 2
+                        ? `You and ${likes.length - 1} others`
+                        : `${likes.length} like${likes.length > 1 ? "s" : ""}`}
                 </>
             ) : (
                 <>
                     <ThumbUpAltOutlined fontSize="small" />
-                    &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+                    &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
                 </>
             );
         }
@@ -97,7 +110,7 @@ const Post = ({ post, setCurrentId }) => {
                     color="primary"
                     // disable liking if you are not logged in
                     disabled={!user?.result}
-                    onClick={() => dispatch(likePost(post._id))}
+                    onClick={handleLike}
                 >
                     <Likes />
                 </Button>

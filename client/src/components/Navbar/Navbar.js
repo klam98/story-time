@@ -6,6 +6,7 @@ import jwt_deocde from "jwt-decode";
 
 import useStyles from "./styles";
 import storytime from "../../assets/storytime-logo.png";
+import githubIcon from "../../assets/github-bigger.png";
 import { LOGOUT } from "../../constants/actionTypes";
 
 function Navbar() {
@@ -21,6 +22,7 @@ function Navbar() {
 
         // need to set user to null after logging out
         setUser(null);
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -68,20 +70,26 @@ function Navbar() {
                         <Typography className={classes.userName} variant="h6">
                             {user?.result.name}
                         </Typography>
-                        <Button
-                            className={classes.logout}
-                            variant="contained"
-                            color="secondary"
-                            onClick={logout}
-                        >
+                        <Button variant="contained" color="secondary" onClick={logout}>
                             Logout
                         </Button>
                     </div>
                 ) : (
-                    // else display login button and link to authorization
-                    <Button component={Link} to="/auth" variant="contained" color="primary">
-                        Sign in
-                    </Button>
+                    <>
+                        <Button
+                            className={classes.github}
+                            variant="contained"
+                            href="https://github.com/klam98/story-time"
+                            startIcon={<Avatar className={classes.githubIcon} src={githubIcon} />}
+                            target="blank"
+                        >
+                            View Source Code
+                        </Button>
+                        {/* // else display login button and link to authorization */}
+                        <Button component={Link} to="/auth" variant="contained" color="primary">
+                            Sign in
+                        </Button>
+                    </>
                 )}
             </Toolbar>
         </AppBar>

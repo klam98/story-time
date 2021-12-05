@@ -4,9 +4,9 @@ A social media web application where users can read and share stories about anyt
 
 Client-side (main website) is hosted at: https://story-time-web.netlify.app 
 
-Server-side is hosted at: https://story-time-blog.herokuapp.com
+Server-side is hosted at Heroku.
 
 <!-- Here is a preview of the website:
 ![image.info](client/src/assets/storytime.png) -->
 
-This web application uses the MERN (MongoDB, Express, React, Node) tech stack and also incorporates other popular React libraries like Redux for managing global state and Material-UI for the user interface.
+This web application uses the MERN stack (MongoDB, Express, React, Node) and also incorporates popular React libraries like Redux for managing global state and Material-UI for user interface design. Account authorization is handled through Google OAuth if signing in via Google, or JSON Web Tokens with hashed passwords if manually signing up. Other cool features include: searching posts by name or hashtags, and commenting on posts to communicate with other users. Feel free to make an account and share some of your interesting stories, I would love to read them!

@@ -29,8 +29,7 @@ export const signUp = async (req, res) => {
 
         const token = jwt.sign(
             { email: result.email, id: result._id },
-            "test", // put test in-place for secret for now
-            { expiresIn: "1h" }
+            "99705D41A3D6F8E184DB7DA2CC7CC1FB0FD853C893B899E83A02FEB8E7ABDC0E"
         );
 
         res.status(201).json({ result, token });
@@ -64,7 +63,7 @@ export const signIn = async (req, res) => {
                 email: existingUser.email,
                 id: existingUser._id,
             },
-            "test",
+            "99705D41A3D6F8E184DB7DA2CC7CC1FB0FD853C893B899E83A02FEB8E7ABDC0E",
             { expiresIn: "1h" }
         );
 

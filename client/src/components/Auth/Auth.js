@@ -43,6 +43,11 @@ function Auth() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleChangeEmail = (e) => {
+        // keep formData properties but just change the event target's name to the user input value
+        setFormData({ ...formData, [e.target.name]: e.target.value.toLowerCase() });
+    };
+
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
@@ -100,7 +105,7 @@ function Auth() {
                             <Input
                                 name="email"
                                 label="Email Address"
-                                handleChange={handleChange}
+                                handleChange={handleChangeEmail}
                                 type="email"
                             />
                             {/* we need a state here to swap between password and showing password text */}
