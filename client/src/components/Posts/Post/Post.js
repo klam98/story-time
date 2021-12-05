@@ -72,19 +72,6 @@ const Post = ({ post, setCurrentId }) => {
                     <Typography variant="h6">{post.name}</Typography>
                     <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
                 </div>
-                {/* only show edit button if user's google/jwt id matches post id */}
-                {(user?.result?.googleId === post?.creator ||
-                    user?.result?._id === post?.creator) && (
-                    <div className={classes.overlay2}>
-                        <Button
-                            style={{ color: "white" }}
-                            size="small"
-                            onClick={() => setCurrentId(post._id)}
-                        >
-                            <MoreHorizIcon fontSize="medium" />
-                        </Button>
-                    </div>
-                )}
                 <div className={classes.details}>
                     <Typography variant="body2" color="textSecondary">
                         {/* map every tag in a post prepending them with a '#' and appending them with a space
@@ -103,6 +90,7 @@ const Post = ({ post, setCurrentId }) => {
                 </CardContent>
             </ButtonBase>
             <CardActions className={classes.cardActions}>
+                {/* Like Button */}
                 <Button
                     size="small"
                     color="primary"
@@ -112,6 +100,18 @@ const Post = ({ post, setCurrentId }) => {
                 >
                     <Likes />
                 </Button>
+
+                {/* Edit Button */}
+                {/* only show edit button if user's google/jwt id matches post id */}
+                {(user?.result?.googleId === post?.creator ||
+                    user?.result?._id === post?.creator) && (
+                    <Button size="small" color="primary" onClick={() => setCurrentId(post._id)}>
+                        <MoreHorizIcon fontSize="medium" />
+                        Edit
+                    </Button>
+                )}
+
+                {/* Delete Button */}
                 {/* only show delete button if user's google/jwt id matches post id */}
                 {(user?.result?.googleId === post?.creator ||
                     user?.result?._id === post?.creator) && (
@@ -121,7 +121,7 @@ const Post = ({ post, setCurrentId }) => {
                         onClick={() => dispatch(deletePost(post._id))}
                     >
                         <DeleteIcon fontSize="small" />
-                        &nbsp; Delete
+                        Delete
                     </Button>
                 )}
             </CardActions>

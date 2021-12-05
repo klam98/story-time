@@ -5,7 +5,7 @@ import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 
 import useStyles from "./styles";
-import { getPost } from "../../actions/posts";
+import { getPost, getPostsBySearch } from "../../actions/posts";
 import placeHolderImage from "../../assets/no-image-placeholder.png";
 
 const PostDetails = () => {
@@ -20,6 +20,13 @@ const PostDetails = () => {
         dispatch(getPost(id));
     }, [id]);
 
+    // useEffect for recommending similar posts by the tags they share
+    // useEffect(() => {
+    //     if (post) {
+    //         dispatch(getPostsBySearch({ search: "none", tags: post?.tags.join(",") }));
+    //     }
+    // }, [post]);
+
     // check if there are no posts before it tries to render them
     if (!post) {
         return null;
@@ -32,6 +39,9 @@ const PostDetails = () => {
             </Paper>
         );
     }
+
+    // cannot have the currnet post you are on being recommended to you
+    // const recommendedPosts = posts.filter(({ _id }) => _id === post._id);
 
     return (
         <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
@@ -62,6 +72,19 @@ const PostDetails = () => {
                     />
                 </div>
             </div>
+            {/* {recommendedPosts.length && (
+                <div className={classes.section}>
+                    <Typography variant="h5" gutterBottom>
+                        Similar stories you might also like:
+                    </Typography>
+                    <Divider />
+                    <div className={classes.recommendedPosts}>
+                        {recommendedPosts.map(({ title, message, name, likes, mediaFile, _id }) => (
+                            <div>{title}</div>
+                        ))}
+                    </div>
+                </div>
+            )} */}
         </Paper>
     );
 };

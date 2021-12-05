@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import useStyles from "./styles";
 import { createPost, updatePost } from "../../actions/posts";
@@ -17,10 +18,11 @@ const Form = ({ currentId, setCurrentId }) => {
 
     // grab the state of the post to be updated by comparing each post._id to currentId
     const postToBeUpdated = useSelector((state) =>
-        currentId ? state.posts.find((post) => post._id === currentId) : null
+        currentId ? state.posts.posts.find((post) => post._id === currentId) : null
     );
     const classes = useStyles();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("profile"));
 
     // change the state of the form whenever there exists a post to be updated
@@ -48,10 +50,8 @@ const Form = ({ currentId, setCurrentId }) => {
         if (currentId) {
             dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
         } else {
-            dispatch(createPost({ ...postData, name: user?.result?.name }));
+            dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
         }
-
-        // form should be cleared once a post is created/updated
         clearForm();
     };
 

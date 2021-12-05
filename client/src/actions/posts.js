@@ -22,7 +22,7 @@ export const getPost = (id) => async (dispatch) => {
 
         // fetching posts from API and then dispatching it through the action payload for the reducer to handle
         const { data } = await api.getPost(id);
-        dispatch({ type: FETCH_POST, payload: data });
+        dispatch({ type: FETCH_POST, payload: { post: data } });
 
         dispatch({ type: STOP_LOADING });
     } catch (error) {
@@ -36,8 +36,10 @@ export const getPosts = (page) => async (dispatch) => {
         dispatch({ type: START_LOADING });
 
         // fetching posts from API and then dispatching it through the action payload for the reducer to handle
-        const { data } = await api.getPosts(page);
-        dispatch({ type: FETCH_ALL, payload: data });
+        const {
+            data: { data, currentPage, numberOfPages },
+        } = await api.getPosts(page);
+        dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
 
         dispatch({ type: STOP_LOADING });
     } catch (error) {
@@ -54,7 +56,7 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
         const {
             data: { data },
         } = await api.getPostsBySearch(searchQuery.search, searchQuery.tags);
-        dispatch({ type: FETCH_BY_SEARCH, payload: data });
+        dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
 
         dispatch({ type: STOP_LOADING });
     } catch (error) {
@@ -62,12 +64,14 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     }
 };
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
         const { data } = await api.createPost(post);
         dispatch({ type: CREATE, payload: data });
+
+        navigate(`/posts/${data._id}`);
     } catch (error) {
         console.log(error);
     }

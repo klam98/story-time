@@ -20,7 +20,7 @@ const postsReducer = (state = { isLoading: true, posts: [] }, action) => {
         case FETCH_POST:
             return {
                 ...state,
-                post: action.payload,
+                post: action.payload.post,
             };
         case FETCH_ALL:
             return {
@@ -32,7 +32,7 @@ const postsReducer = (state = { isLoading: true, posts: [] }, action) => {
         case FETCH_BY_SEARCH:
             return {
                 ...state,
-                posts: action.payload,
+                posts: action.payload.data,
             };
         case CREATE:
             // return all of the persisted posts + the newly created post

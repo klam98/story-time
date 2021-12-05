@@ -26,7 +26,7 @@ export const getPosts = async (req, res) => {
         // sorting posts by _id, -1 gets us documents ordered from newest -> oldest created documents
         const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
 
-        res.status(200).json({
+        res.json({
             data: posts,
             currentPage: Number(page),
             numberOfPages: Math.ceil(total / LIMIT),
@@ -53,6 +53,7 @@ export const getPostsBySearch = async (req, res) => {
         res.json({ data: posts });
     } catch (error) {
         res.status(404).json({ message: error.message });
+        console.log("getPostBySearch() failing");
     }
 };
 
@@ -136,5 +137,5 @@ export const likePost = async (req, res) => {
         new: true,
     });
 
-    res.json(updatedPost);
+    res.status(200).json(updatedPost);
 };
