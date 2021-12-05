@@ -20,6 +20,11 @@ export default makeStyles({
         borderRadius: "15px",
         height: "100%",
         position: "relative",
+        "&:hover": {
+            // backgroundColor: "rgb(48, 63, 159, 0.5)",
+            // backgroundColor: "rgb(125, 125, 125, 0.7)",
+            backgroundColor: "rgb(225, 225, 225, 0.75)",
+        },
     },
     overlay: {
         position: "absolute",
@@ -45,12 +50,17 @@ export default makeStyles({
         padding: "0 16px",
     },
     cardActions: {
-        padding: "0 4px 8px 4px",
+        padding: "0 8px 8px 8px",
         display: "flex",
         justifyContent: "space-between",
     },
     cardAction: {
         display: "block",
         textAlign: "initial",
+    },
+    btn: {
+        "&:hover": {
+            backgroundColor: "rgb(48, 63, 159, 0.3)",
+        },
     },
 });

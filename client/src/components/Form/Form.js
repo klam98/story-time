@@ -112,6 +112,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant="outlined"
                     label="Tags"
                     fullWidth
+                    className={classes.chip}
                     value={postData.tags}
                     // remove white spaces between words of the entered tag
                     onAdd={(tag) => handleAdd(tag.replace(/\s/g, ""))}

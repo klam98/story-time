@@ -85,13 +85,14 @@ const Post = ({ post, setCurrentId }) => {
                 </Typography>
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {post.message}
+                        {post.message.split(" ").splice(0, 20).join(" ")}...
                     </Typography>
                 </CardContent>
             </ButtonBase>
             <CardActions className={classes.cardActions}>
                 {/* Like Button */}
                 <Button
+                    className={classes.btn}
                     size="small"
                     color="primary"
                     // disable liking if you are not logged in
@@ -105,7 +106,12 @@ const Post = ({ post, setCurrentId }) => {
                 {/* only show edit button if user's google/jwt id matches post id */}
                 {(user?.result?.googleId === post?.creator ||
                     user?.result?._id === post?.creator) && (
-                    <Button size="small" color="primary" onClick={() => setCurrentId(post._id)}>
+                    <Button
+                        className={classes.btn}
+                        size="small"
+                        color="primary"
+                        onClick={() => setCurrentId(post._id)}
+                    >
                         <MoreHorizIcon fontSize="medium" />
                         Edit
                     </Button>
@@ -116,6 +122,7 @@ const Post = ({ post, setCurrentId }) => {
                 {(user?.result?.googleId === post?.creator ||
                     user?.result?._id === post?.creator) && (
                     <Button
+                        className={classes.btn}
                         size="small"
                         color="primary"
                         onClick={() => dispatch(deletePost(post._id))}

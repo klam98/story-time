@@ -13,8 +13,10 @@ const Paginate = ({ page }) => {
 
     useEffect(() => {
         // anytime a page changes, check if the page exists and if it does, fetch posts for it
-        dispatch(getPosts(page));
-    }, [page]);
+        if (page) {
+            dispatch(getPosts(page));
+        }
+    }, [dispatch, page]);
 
     return (
         <Pagination

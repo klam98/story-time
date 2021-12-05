@@ -36,7 +36,7 @@ export const getPosts = async (req, res) => {
     }
 };
 
-// QUERY -> /search?page=1 -> page = 1
+// QUERY -> /search?searchQuery=adsf&tags= -> searchQuery=asdf, tags=""
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags } = req.query;
 
@@ -53,7 +53,6 @@ export const getPostsBySearch = async (req, res) => {
         res.json({ data: posts });
     } catch (error) {
         res.status(404).json({ message: error.message });
-        console.log("getPostBySearch() failing");
     }
 };
 
