@@ -7,6 +7,7 @@ import {
     updatePost,
     deletePost,
     likePost,
+    commentPost,
 } from "../controllers/postMethods.js";
 import auth from "../middleware/auth.js";
 
@@ -31,6 +32,7 @@ router.patch("/:id", auth, updatePost);
 
 router.delete("/:id", auth, deletePost);
 
+router.post("/:id/commentPost", auth, commentPost);
 // need auth for liking posts so that each post can be only liked once by any given user id
 router.patch("/:id/likePost", auth, likePost);
 

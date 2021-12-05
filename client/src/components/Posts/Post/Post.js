@@ -92,7 +92,7 @@ const Post = ({ post, setCurrentId }) => {
             <CardActions className={classes.cardActions}>
                 {/* Like Button */}
                 <Button
-                    className={classes.btn}
+                    className={classes.likeBtn}
                     size="small"
                     color="primary"
                     // disable liking if you are not logged in
@@ -107,9 +107,8 @@ const Post = ({ post, setCurrentId }) => {
                 {(user?.result?.googleId === post?.creator ||
                     user?.result?._id === post?.creator) && (
                     <Button
-                        className={classes.btn}
+                        className={classes.editBtn}
                         size="small"
-                        color="primary"
                         onClick={() => setCurrentId(post._id)}
                     >
                         <MoreHorizIcon fontSize="medium" />
@@ -122,9 +121,9 @@ const Post = ({ post, setCurrentId }) => {
                 {(user?.result?.googleId === post?.creator ||
                     user?.result?._id === post?.creator) && (
                     <Button
-                        className={classes.btn}
+                        className={classes.deleteBtn}
                         size="small"
-                        color="primary"
+                        color="secondary"
                         onClick={() => dispatch(deletePost(post._id))}
                     >
                         <DeleteIcon fontSize="small" />

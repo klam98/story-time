@@ -138,3 +138,19 @@ export const likePost = async (req, res) => {
 
     res.status(200).json(updatedPost);
 };
+
+export const commentPost = async (req, res) => {
+    // extract the post id from the req
+    const { id } = req.params;
+    // extract the comment that is passed back from the front end on the api call
+    // it gets sent back as the body of the request
+    const { comment } = req.body;
+
+    // find the post by id and then push another comment to its comment array
+    const post = await PostMessage.findById(id);
+    post.comments.push(comment);
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+
+    res.json(updatedPost);
+};

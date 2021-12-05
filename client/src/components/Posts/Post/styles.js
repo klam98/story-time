@@ -58,9 +58,21 @@ export default makeStyles({
         display: "block",
         textAlign: "initial",
     },
-    btn: {
+    likeBtn: {
         "&:hover": {
             backgroundColor: "rgb(48, 63, 159, 0.3)",
+        },
+    },
+    editBtn: {
+        "&:hover": {
+            // nice 8)
+            backgroundColor: "rgb(69, 69, 69, 0.3)",
+            color: "black",
+        },
+    },
+    deleteBtn: {
+        "&:hover": {
+            backgroundColor: "rgb(200, 55, 55, 0.3)",
         },
     },
 });

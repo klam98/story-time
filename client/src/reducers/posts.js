@@ -5,6 +5,7 @@ import {
     CREATE,
     UPDATE,
     LIKE,
+    COMMENT,
     DELETE,
     START_LOADING,
     STOP_LOADING,
@@ -38,15 +39,10 @@ const postsReducer = (state = { isLoading: true, posts: [] }, action) => {
             // return all of the persisted posts + the newly created post
             return { ...state, posts: [...state.posts, action.payload] };
         case UPDATE:
-            // if some post id from posts matches the post id from the data (payload), return the updated post
-            return {
-                ...state,
-                posts: state.posts.map((post) =>
-                    post._id === action.payload._id ? action.payload : post
-                ),
-            };
         case LIKE:
-            // the logic for liking a post matches that of updating a post
+        case COMMENT:
+            // if some post id from posts matches the post id from the data (payload), changed just the updated post
+            // update, like, and comment all follow the same implementation for its reducer
             return {
                 ...state,
                 posts: state.posts.map((post) =>
