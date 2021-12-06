@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
         borderRadius: "20px",
         objectFit: "cover",
         width: "100%",
-        maxHeight: "600px",
+        maxHeight: "500px",
     },
     card: {
         display: "flex",
@@ -45,8 +45,15 @@ export default makeStyles((theme) => ({
         justifyContent: "space-between",
     },
     commentsInnerContainer: {
-        height: "200px",
+        height: "230px",
         overflowY: "auto", // makes the div scrollable for the comments
         marginRight: "30px",
+    },
+    similarStories: {
+        padding: "5px",
+        borderRadius: "10px",
+        "&:hover": {
+            backgroundColor: "rgb(225, 225, 225, 0.75)",
+        },
     },
 }));

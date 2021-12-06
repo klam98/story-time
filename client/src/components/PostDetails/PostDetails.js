@@ -67,7 +67,6 @@ const PostDetails = () => {
                     <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
                     <Divider style={{ margin: "20px 0" }} />
                     <CommentSection post={post} />
-                    <Divider style={{ margin: "20px 0" }} />
                 </div>
                 <div className={classes.imageSection}>
                     <img
@@ -80,12 +79,13 @@ const PostDetails = () => {
             {recommendedPosts.length ? (
                 <div className={classes.section}>
                     <Typography variant="h5" gutterBottom>
-                        Similar stories you might also like:
+                        Similar stories you may also like:
                     </Typography>
                     <Divider />
                     <div className={classes.recommendedPosts}>
                         {recommendedPosts.map(({ title, message, name, likes, mediaFile, _id }) => (
                             <div
+                                className={classes.similarStories}
                                 style={{ margin: "20px", cursor: "pointer" }}
                                 onClick={() => openPost(_id)}
                                 key={_id}

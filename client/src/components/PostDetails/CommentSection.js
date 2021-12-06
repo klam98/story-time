@@ -35,7 +35,7 @@ const CommentSection = ({ post }) => {
             <div className={classes.commentsOuterContainer}>
                 <div className={classes.commentsInnerContainer}>
                     <Typography gutterBottom variant="h6">
-                        Comments
+                        Comments:
                     </Typography>
                     {comments.map((comment, index) => (
                         <Typography key={index} gutterBottom variant="subtitle1">
@@ -47,9 +47,9 @@ const CommentSection = ({ post }) => {
                     <div ref={commentsRef} />
                 </div>
                 {user?.result?.name ? (
-                    <div style={{ width: "70%" }}>
+                    <div style={{ width: "50%" }}>
                         <Typography gutterBottom variant="h6">
-                            Write a Comment:
+                            Add a Comment:
                         </Typography>
                         <TextField
                             fullWidth

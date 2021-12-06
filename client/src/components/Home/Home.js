@@ -6,7 +6,7 @@ import ChipInput from "material-ui-chip-input";
 
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
-import Paginate from "../Paginate";
+import Paginate from "../Paginate/Paginate";
 import { getPostsBySearch } from "../../actions/posts";
 // we can name useStyles alias directly since it comes from a default export
 import useStyles from "./styles";
