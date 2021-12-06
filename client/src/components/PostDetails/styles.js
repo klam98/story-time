@@ -56,4 +56,7 @@ export default makeStyles((theme) => ({
             backgroundColor: "rgb(225, 225, 225, 0.75)",
         },
     },
+    typoMargin: {
+        marginBottom: "20px",
+    },
 }));

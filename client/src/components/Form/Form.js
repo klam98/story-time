@@ -15,6 +15,7 @@ const Form = ({ currentId, setCurrentId }) => {
         tags: [],
         mediaFile: "",
     });
+    const [isFormInvalid, setIsFormInvalid] = useState(false);
 
     // grab the state of the post to be updated by comparing each post._id to currentId
     const postToBeUpdated = useSelector((state) =>
@@ -36,6 +37,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const clearForm = () => {
         // need to clear the currentId and overwrite the form state
         setCurrentId(0);
+        setIsFormInvalid(false);
         setPostData({
             title: "",
             message: "",
@@ -44,15 +46,29 @@ const Form = ({ currentId, setCurrentId }) => {
         });
     };
 
+    const validateForm = (postData) => {
+        if (postData.title === "" || postData.message === "") {
+            setIsFormInvalid(true);
+            return true;
+        } else {
+            setIsFormInvalid(false);
+            return false;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (currentId) {
-            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
-        } else {
-            dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
+        // form is valid since the useState is: isFormInvalid
+        if (!validateForm(postData)) {
+            if (currentId) {
+                dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+                clearForm();
+            } else {
+                dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
+                clearForm();
+            }
         }
-        clearForm();
     };
 
     // check if user is logged in or not to decide if they can make a post
@@ -93,6 +109,8 @@ const Form = ({ currentId, setCurrentId }) => {
                     name="title"
                     variant="outlined"
                     label="Title"
+                    error={isFormInvalid && postData.title === ""}
+                    helperText={isFormInvalid && postData.title === "" && "Title cannot be empty."}
                     fullWidth
                     value={postData.title}
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
@@ -101,6 +119,10 @@ const Form = ({ currentId, setCurrentId }) => {
                     name="message"
                     variant="outlined"
                     label="Message"
+                    error={isFormInvalid && postData.message === ""}
+                    helperText={
+                        isFormInvalid && postData.message === "" && "Message cannot be empty."
+                    }
                     fullWidth
                     multiline
                     rows={8}

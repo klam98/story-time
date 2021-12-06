@@ -60,7 +60,12 @@ const PostDetails = () => {
                     <Typography gutterBottom variant="h6" color="textSecondary" component="h2">
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
-                    <Typography gutterBottom variant="body1" component="p">
+                    <Typography
+                        gutterBottom
+                        variant="body1"
+                        component="p"
+                        className={classes.typoMargin}
+                    >
                         {post.message}
                     </Typography>
                     <Typography variant="h6">Created by: {post.name}</Typography>

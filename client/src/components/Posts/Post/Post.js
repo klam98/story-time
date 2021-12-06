@@ -7,6 +7,11 @@ import {
     CardMedia,
     Button,
     Typography,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    Slide,
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -28,6 +33,7 @@ const Post = ({ post, setCurrentId }) => {
     const user = JSON.parse(localStorage.getItem("profile"));
     // useState for likes for implementing responsive liking
     const [likes, setLikes] = useState(post?.likes);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     const validUserId = user?.result?.googleId || user?.result?._id;
     const hasLikedPost = post.likes.find((like) => like === validUserId);
@@ -40,6 +46,19 @@ const Post = ({ post, setCurrentId }) => {
         } else {
             setLikes([...post.likes, validUserId]);
         }
+    };
+
+    const handleDelete = () => {
+        setShowDeleteConfirm(false);
+        dispatch(deletePost(post._id));
+    };
+
+    const handleClickOpen = () => {
+        setShowDeleteConfirm(true);
+    };
+
+    const handleClose = () => {
+        setShowDeleteConfirm(false);
     };
 
     // Likes component necessary for handling 'Like' grammar on each post
@@ -137,12 +156,25 @@ const Post = ({ post, setCurrentId }) => {
                         className={classes.deleteBtn}
                         size="small"
                         color="secondary"
-                        onClick={() => dispatch(deletePost(post._id))}
+                        onClick={handleClickOpen}
                     >
                         <DeleteIcon fontSize="small" />
                         Delete
                     </Button>
                 )}
+                <Dialog open={showDeleteConfirm} onClose={handleClose} TransitionComponent={Slide}>
+                    <DialogContent>
+                        <DialogContentText style={{ color: "black" }}>
+                            Delete your post?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions className={classes.deleteConfirm}>
+                        <Button onClick={handleClose}>No</Button>
+                        <Button onClick={handleDelete} autoFocus>
+                            Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </CardActions>
         </Card>
     );

@@ -75,4 +75,7 @@ export default makeStyles({
             backgroundColor: "rgb(200, 55, 55, 0.3)",
         },
     },
+    deleteConfirm: {
+        justifyContent: "center",
+    },
 });
