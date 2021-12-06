@@ -83,7 +83,7 @@ function Home() {
                                 value={tags}
                                 onAdd={(tag) => handleAdd(tag)}
                                 onDelete={(tagToDelete) => handleDelete(tagToDelete)}
-                                label="Search Tags"
+                                label="Search Tags (press enter)"
                                 variant="outlined"
                             />
                             <Button

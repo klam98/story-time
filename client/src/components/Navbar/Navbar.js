@@ -5,8 +5,9 @@ import { useDispatch } from "react-redux";
 import jwt_deocde from "jwt-decode";
 
 import useStyles from "./styles";
-import storytime from "../../assets/storytime-logo.png";
 import githubIcon from "../../assets/github-bigger.png";
+import storytime from "../../assets/storytime-logo.jpg";
+import storytime2 from "../../assets/storytime-logo2.png";
 import { LOGOUT } from "../../constants/actionTypes";
 
 function Navbar() {
@@ -43,18 +44,9 @@ function Navbar() {
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
-            <div className={classes.brandContainer}>
-                <Typography
-                    component={Link}
-                    to="/"
-                    className={classes.heading}
-                    variant="h2"
-                    align="center"
-                >
-                    Story Time
-                </Typography>
-                <img className={classes.image} src={storytime} alt="storytime" height="65" />
-            </div>
+            <Link to="/" className={classes.brandContainer}>
+                <img component={Link} to="/" src={storytime2} alt="storytime" height="70" />
+            </Link>
             <Toolbar className={classes.toolbar}>
                 {user?.result ? (
                     // if user is logged in display relevant info and logout button

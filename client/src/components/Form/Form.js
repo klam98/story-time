@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
-import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Resizer from "react-image-file-resizer";
 
 import useStyles from "./styles";
 import { createPost, updatePost } from "../../actions/posts";
@@ -68,6 +68,32 @@ const Form = ({ currentId, setCurrentId }) => {
                 dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
                 clearForm();
             }
+        }
+    };
+
+    const resizeFile = (file) =>
+        new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file,
+                900, // maxWidth
+                500, // maxHeight
+                "JPEG", // compressFormat
+                100, // quality; if no compress is needed, just set it to 100
+                0, // rotation; if no rotation is needed, just set it to 0
+                (uri) => {
+                    resolve(uri);
+                },
+                "base64"
+            );
+        });
+
+    const handleImageUpload = async (e) => {
+        try {
+            const file = e.target.files[0];
+            const image = await resizeFile(file);
+            setPostData({ ...postData, mediaFile: image });
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -141,11 +167,11 @@ const Form = ({ currentId, setCurrentId }) => {
                     onDelete={(tagToDelete) => handleDelete(tagToDelete)}
                 />
                 <div className={classes.fileInput}>
-                    <FileBase
+                    <input
                         type="file"
                         multiple={false}
-                        // convert image data into base64
-                        onDone={({ base64 }) => setPostData({ ...postData, mediaFile: base64 })}
+                        accept="image/*"
+                        onChange={handleImageUpload}
                     />
                 </div>
                 <Button
