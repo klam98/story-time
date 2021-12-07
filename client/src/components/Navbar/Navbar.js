@@ -67,7 +67,7 @@ function Navbar() {
                         </Button>
                     </div>
                 ) : (
-                    <>
+                    <div className={classes.profile2}>
                         <Button
                             className={classes.github}
                             variant="contained"
@@ -81,7 +81,7 @@ function Navbar() {
                         <Button component={Link} to="/auth" variant="contained" color="primary">
                             Sign in
                         </Button>
-                    </>
+                    </div>
                 )}
             </Toolbar>
         </AppBar>

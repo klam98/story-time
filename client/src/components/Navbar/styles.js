@@ -33,7 +33,14 @@ export default makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "row",
-        width: "350px",
+        width: "340px",
+        alignItems: "center",
+    },
+    profile2: {
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        width: "310px",
         alignItems: "center",
     },
     userName: {
@@ -53,7 +60,6 @@ export default makeStyles((theme) => ({
     github: {
         color: "white",
         backgroundColor: "rgba(55, 55, 65, 1)",
-        marginRight: "10px",
         "&:hover": {
             backgroundColor: "rgb(25, 25, 25, 1)",
         },
