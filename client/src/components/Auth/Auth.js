@@ -23,18 +23,59 @@ function Auth() {
     const [showPassword, setShowPassword] = useState(false);
     const [isSigningUp, setIsSigningUp] = useState(false);
     const [formData, setFormData] = useState(formInitialState);
+
+    // states for sign up error-handling
+    const [isEmailAlreadyExists, setIsEmailAlreadyExists] = useState(false);
+    const [isPasswordMismatched, setIsPasswordMismatched] = useState(false);
+
+    // states for sign in error-handling
+    const [isEmailNotExist, setIsEmailNotExist] = useState(false);
+    const [isInvalidCredentials, setIsInvalidCredentials] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const classes = useStyles();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // 2 different types of submit, sign up and sign in:
         if (isSigningUp) {
-            dispatch(signUp(formData, navigate));
+            try {
+                await dispatch(signUp(formData, navigate));
+            } catch (error) {
+                const errorCode = error.message.slice(-3);
+
+                switch (errorCode) {
+                    case "401":
+                        setIsEmailAlreadyExists(true);
+                        break;
+                    case "400":
+                        setIsPasswordMismatched(true);
+                        break;
+                    default:
+                        console.log("Possible server error has occured.");
+                        break;
+                }
+            }
         } else {
-            dispatch(signIn(formData, navigate));
+            try {
+                await dispatch(signIn(formData, navigate));
+            } catch (error) {
+                const errorCode = error.message.slice(-3);
+
+                switch (errorCode) {
+                    case "404":
+                        setIsEmailNotExist(true);
+                        break;
+                    case "400":
+                        setIsInvalidCredentials(true);
+                        break;
+                    default:
+                        console.log("Possible server error has occured.");
+                        break;
+                }
+            }
         }
     };
 
@@ -44,17 +85,39 @@ function Auth() {
     };
 
     const handleChangeEmail = (e) => {
-        // keep formData properties but just change the event target's name to the user input value
+        // reset the error states for email when user is editing it
+        setIsEmailAlreadyExists(false);
+        setIsEmailNotExist(false);
+        // when you change your email, on sign-in, you could have the correct password at some point
+        setIsInvalidCredentials(false);
+
+        // make all emails case-insensitive when stored on the DB
         setFormData({ ...formData, [e.target.name]: e.target.value.toLowerCase() });
+    };
+
+    const handleChangePassword = (e) => {
+        // reset the error states for password when user is editing it
+        setIsPasswordMismatched(false);
+        setIsInvalidCredentials(false);
+
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
+    const clearAllErrorStates = () => {
+        setIsEmailAlreadyExists(false);
+        setIsPasswordMismatched(false);
+        setIsEmailNotExist(false);
+        setIsInvalidCredentials(false);
+    };
+
     const switchMode = () => {
         setIsSigningUp((prevIsSigningUp) => !prevIsSigningUp);
         setShowPassword(false);
+        clearAllErrorStates();
     };
 
     const googleSuccess = async (res) => {
@@ -105,6 +168,12 @@ function Auth() {
                             <Input
                                 name="email"
                                 label="Email Address"
+                                error={isEmailAlreadyExists || isEmailNotExist}
+                                helperText={
+                                    (isEmailAlreadyExists &&
+                                        "There is already an account under this email.") ||
+                                    (isEmailNotExist && "There is no account with this email.")
+                                }
                                 handleChange={handleChangeEmail}
                                 type="email"
                             />
@@ -112,6 +181,12 @@ function Auth() {
                             <Input
                                 name="password"
                                 label="Password"
+                                error={isPasswordMismatched || isInvalidCredentials}
+                                helperText={
+                                    (isPasswordMismatched &&
+                                        "Passwords do not match, try again.") ||
+                                    (isInvalidCredentials && "Incorrect password for this account.")
+                                }
                                 handleChange={handleChange}
                                 type={showPassword ? "text" : "password"}
                                 handleShowPassword={handleShowPassword}
@@ -120,7 +195,7 @@ function Auth() {
                                 <Input
                                     name="confirmPassword"
                                     label="Repeat Password"
-                                    handleChange={handleChange}
+                                    handleChange={handleChangePassword}
                                     type="password"
                                 />
                             )}

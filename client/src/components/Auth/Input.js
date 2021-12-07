@@ -3,7 +3,17 @@ import { TextField, Grid, InputAdornment, IconButton } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-function Input({ half, name, handleChange, label, autoFocus, type, handleShowPassword }) {
+function Input({
+    half,
+    name,
+    handleChange,
+    label,
+    autoFocus,
+    type,
+    handleShowPassword,
+    error,
+    helperText,
+}) {
     return (
         <Grid item xs={12} sm={half ? 6 : 12}>
             <TextField
@@ -11,6 +21,8 @@ function Input({ half, name, handleChange, label, autoFocus, type, handleShowPas
                 onChange={handleChange}
                 vairant="outlined"
                 required
+                error={error}
+                helperText={helperText}
                 fullWidth
                 label={label}
                 autoFocus={autoFocus}

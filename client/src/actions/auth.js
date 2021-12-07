@@ -9,7 +9,7 @@ export const signUp = (formData, navigate) => async (dispatch) => {
 
         navigate("/");
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 };
 
@@ -21,6 +21,6 @@ export const signIn = (formData, navigate) => async (dispatch) => {
 
         navigate("/");
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 };
