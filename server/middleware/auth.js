@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
-
-// secret is temporarily set as "99705D41A3D6F8E184DB7DA2CC7CC1FB0FD853C893B899E83A02FEB8E7ABDC0E"
+import { AUTH_SECRET } from "../index.js";
 
 const auth = async (req, res, next) => {
     try {
@@ -13,10 +12,7 @@ const auth = async (req, res, next) => {
         let decodedData;
 
         if (token && isCustomAuth) {
-            decodedData = jwt.verify(
-                token,
-                "99705D41A3D6F8E184DB7DA2CC7CC1FB0FD853C893B899E83A02FEB8E7ABDC0E"
-            );
+            decodedData = jwt.verify(token, AUTH_SECRET);
             req.userId = decodedData?.id;
         } else {
             // working with Google OAuth token

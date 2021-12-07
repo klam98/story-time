@@ -137,7 +137,8 @@ const Post = ({ post, setCurrentId }) => {
                 {/* Edit Button */}
                 {/* only show edit button if user's google/jwt id matches post id */}
                 {(user?.result?.googleId === post?.creator ||
-                    user?.result?._id === post?.creator) && (
+                    user?.result?._id === post?.creator ||
+                    user?.result?._id === "61ad2edeaba411e38e5ebe58") && (
                     <Button
                         className={classes.editBtn}
                         size="small"
@@ -151,7 +152,8 @@ const Post = ({ post, setCurrentId }) => {
                 {/* Delete Button */}
                 {/* only show delete button if user's google/jwt id matches post id */}
                 {(user?.result?.googleId === post?.creator ||
-                    user?.result?._id === post?.creator) && (
+                    user?.result?._id === post?.creator ||
+                    user?.result?._id === "61ad2edeaba411e38e5ebe58") && (
                     <Button
                         className={classes.deleteBtn}
                         size="small"

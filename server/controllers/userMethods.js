@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import { AUTH_SECRET } from "../index.js";
 
 export const signUp = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
@@ -27,10 +28,7 @@ export const signUp = async (req, res) => {
             name: `${firstName} ${lastName}`,
         });
 
-        const token = jwt.sign(
-            { email: result.email, id: result._id },
-            "99705D41A3D6F8E184DB7DA2CC7CC1FB0FD853C893B899E83A02FEB8E7ABDC0E"
-        );
+        const token = jwt.sign({ email: result.email, id: result._id }, AUTH_SECRET);
 
         res.status(201).json({ result, token });
     } catch (error) {
@@ -63,7 +61,7 @@ export const signIn = async (req, res) => {
                 email: existingUser.email,
                 id: existingUser._id,
             },
-            "99705D41A3D6F8E184DB7DA2CC7CC1FB0FD853C893B899E83A02FEB8E7ABDC0E",
+            AUTH_SECRET,
             { expiresIn: "1h" }
         );
 
