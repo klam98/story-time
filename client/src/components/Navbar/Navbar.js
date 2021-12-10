@@ -6,7 +6,6 @@ import jwt_deocde from "jwt-decode";
 
 import useStyles from "./styles";
 import githubIcon from "../../assets/github-bigger.png";
-import storytime from "../../assets/storytime-logo.jpg";
 import storytime2 from "../../assets/storytime-logo2.png";
 import { LOGOUT } from "../../constants/actionTypes";
 
