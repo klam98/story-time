@@ -19,14 +19,14 @@ const PostDetails = () => {
     useEffect(() => {
         // update the singular getPost each time the post id is changed
         dispatch(getPost(id));
-    }, [id]);
+    }, [dispatch, id]);
 
     // useEffect for recommending similar posts by the tags they share, updates when you open a new post
     useEffect(() => {
         if (post) {
             dispatch(getPostsBySearch({ search: "none", tags: post?.tags.join(",") }));
         }
-    }, [post]);
+    }, [dispatch, post]);
 
     // check if there are no posts before it tries to render them
     if (!post) {
@@ -43,8 +43,6 @@ const PostDetails = () => {
 
     // cannot have the current post you are on being recommended to you
     const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
-
-    console.log(recommendedPosts);
 
     const openPost = (_id) => {
         navigate(`/posts/${_id}`);

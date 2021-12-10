@@ -6,7 +6,6 @@ import jwt_deocde from "jwt-decode";
 
 import useStyles from "./styles";
 import githubIcon from "../../assets/github-bigger.png";
-import storytime from "../../assets/storytime-logo.jpg";
 import storytime2 from "../../assets/storytime-logo2.png";
 import { LOGOUT } from "../../constants/actionTypes";
 
@@ -67,7 +66,7 @@ function Navbar() {
                         </Button>
                     </div>
                 ) : (
-                    <>
+                    <div className={classes.profile2}>
                         <Button
                             className={classes.github}
                             variant="contained"
@@ -81,7 +80,7 @@ function Navbar() {
                         <Button component={Link} to="/auth" variant="contained" color="primary">
                             Sign in
                         </Button>
-                    </>
+                    </div>
                 )}
             </Toolbar>
         </AppBar>

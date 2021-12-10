@@ -47,7 +47,7 @@ const Form = ({ currentId, setCurrentId }) => {
     };
 
     const validateForm = (postData) => {
-        if (postData.title === "" || postData.message === "") {
+        if (postData.title.trim() === "" || postData.message.trim() === "") {
             setIsFormInvalid(true);
             return true;
         } else {
@@ -62,7 +62,8 @@ const Form = ({ currentId, setCurrentId }) => {
         // form is valid since the useState is: isFormInvalid
         if (!validateForm(postData)) {
             if (currentId) {
-                dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+                // creator of post's name should not be changed even on an edit whether that be by the OP or an admin
+                dispatch(updatePost(currentId, { ...postData }));
                 clearForm();
             } else {
                 dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
@@ -135,8 +136,10 @@ const Form = ({ currentId, setCurrentId }) => {
                     name="title"
                     variant="outlined"
                     label="Title"
-                    error={isFormInvalid && postData.title === ""}
-                    helperText={isFormInvalid && postData.title === "" && "Title cannot be empty."}
+                    error={isFormInvalid && postData.title.trim() === ""}
+                    helperText={
+                        isFormInvalid && postData.title.trim() === "" && "Title cannot be empty."
+                    }
                     fullWidth
                     value={postData.title}
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
@@ -145,9 +148,11 @@ const Form = ({ currentId, setCurrentId }) => {
                     name="message"
                     variant="outlined"
                     label="Message"
-                    error={isFormInvalid && postData.message === ""}
+                    error={isFormInvalid && postData.message.trim() === ""}
                     helperText={
-                        isFormInvalid && postData.message === "" && "Message cannot be empty."
+                        isFormInvalid &&
+                        postData.message.trim() === "" &&
+                        "Message cannot be empty."
                     }
                     fullWidth
                     multiline
@@ -158,7 +163,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 <ChipInput
                     name="tags"
                     variant="outlined"
-                    label="Tags"
+                    label="Tags (press enter)"
                     fullWidth
                     className={classes.chip}
                     value={postData.tags}
