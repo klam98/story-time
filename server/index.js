@@ -22,7 +22,7 @@ app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
-    res.send("Hello to Story Time API");
+    res.send("Welcome to the Story Time API");
 });
 
 // connect to MongoDB

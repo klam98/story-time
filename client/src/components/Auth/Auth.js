@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar, Button, Paper, Grid, Typography, Container } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import useStyles from "./styles";
 import Input from "./Input";
@@ -20,6 +20,8 @@ const formInitialState = {
 };
 
 function Auth() {
+    const user = JSON.parse(localStorage.getItem("profile"));
+
     const [showPassword, setShowPassword] = useState(false);
     const [isSigningUp, setIsSigningUp] = useState(false);
     const [formData, setFormData] = useState(formInitialState);
@@ -34,7 +36,15 @@ function Auth() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const classes = useStyles();
+
+    useEffect(() => {
+        // if user is already logged in but tries to navigate /auth, redirect them to /posts
+        if (user) {
+            navigate("/posts");
+        }
+    }, [location]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
