@@ -12,3 +12,5 @@ export const STOP_LOADING = "STOP_LOADING";
 
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
+
+export const RESET_POST_STATE = "RESET_POST_STATE";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from "@material-ui/core";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -10,6 +10,7 @@ import Paginate from "../Paginate/Paginate";
 import { getPostsBySearch } from "../../actions/posts";
 // we can name useStyles alias directly since it comes from a default export
 import useStyles from "./styles";
+import { RESET_POST_STATE } from "../../constants/actionTypes";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -20,6 +21,8 @@ function Home() {
     const dispatch = useDispatch();
     const classes = useStyles();
     const navigate = useNavigate();
+    const location = useLocation();
+
     const query = useQuery();
     const page = query.get("page") || 1;
     const searchQuery = query.get("searchQuery");
@@ -53,6 +56,12 @@ function Home() {
         // remove tagToDelete from tags
         setTags(tags.filter((tag) => tag !== tagToDelete));
     };
+
+    // reset the saved post state when clicking back on the homepage since we do not want that post
+    // to be rerendered when clicking on a different post
+    useEffect(() => {
+        dispatch({ type: RESET_POST_STATE });
+    }, [dispatch, location]);
 
     return (
         <Grow in>
