@@ -13,6 +13,7 @@ export default makeStyles((theme) => ({
         padding: "16px",
     },
     gridContainer: {
+        padding: "0 16px",
         [theme.breakpoints.down("xs")]: {
             flexDirection: "column-reverse",
         },

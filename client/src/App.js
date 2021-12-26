@@ -10,7 +10,7 @@ import PostDetails from "./components/PostDetails/PostDetails";
 const App = () => {
     return (
         <Router>
-            <Container maxWidth="xl">
+            <Container disableGutters maxWidth="xl">
                 <Navbar />
                 <Routes>
                     <Route exact path="/" element={<Navigate to="/posts" />} />
