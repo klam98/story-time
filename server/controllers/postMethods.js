@@ -21,9 +21,9 @@ export const getPosts = async (req, res) => {
     if (sort === "oldest") {
         sorting = { _id: 1 };
     } else if (sort === "mostLiked") {
-        sorting = { numLikes: 1 };
-    } else if (sort === "leastLiked") {
         sorting = { numLikes: -1 };
+    } else if (sort === "leastLiked") {
+        sorting = { numLikes: 1 };
     } else {
         sorting = { _id: -1 };
     }
