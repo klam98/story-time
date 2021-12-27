@@ -17,7 +17,7 @@ API.interceptors.request.use((req) => {
 
 // posts
 export const getPost = (id) => API.get(`/posts/${id}`);
-export const getPosts = (page) => API.get(`/posts?page=${page}`);
+export const getPosts = (page, sort) => API.get(`/posts?page=${page}&sort=${sort}`);
 export const getPostsBySearch = (search, tags) => {
     // user searchQuery to grab the search term along with any given tags
     return API.get(`/posts/search?searchQuery=${search || "none"}&tags=${tags}`);
@@ -28,6 +28,6 @@ export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const commentPost = (comment, id) => API.post(`/posts/${id}/commentPost`, { comment });
 
-// users
+// auth
 export const signUp = (formData) => API.post("/users/signUp", formData);
 export const signIn = (formData) => API.post("/users/signIn", formData);

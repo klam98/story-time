@@ -15,7 +15,18 @@ export const getPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
     // req.query is passed in from the query on the front-end
-    const { page } = req.query;
+    const { page, sort } = req.query;
+    let sorting = null;
+
+    if (sort === "oldest") {
+        sorting = { _id: 1 };
+    } else if (sort === "mostLiked") {
+        sorting = { numLikes: -1 };
+    } else if (sort === "leastLiked") {
+        sorting = { numLikes: 1 };
+    } else {
+        sorting = { _id: -1 };
+    }
 
     try {
         const LIMIT = 8;
@@ -24,7 +35,7 @@ export const getPosts = async (req, res) => {
         const total = await PostMessage.countDocuments({});
 
         // sorting posts by _id, -1 gets us documents ordered from newest -> oldest created documents
-        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+        const posts = await PostMessage.find().sort(sorting).limit(LIMIT).skip(startIndex);
 
         res.json({
             data: posts,
@@ -131,6 +142,8 @@ export const likePost = async (req, res) => {
         // unlike the post by filtering out the like from the user id
         post.likes = post.likes.filter((id) => id !== String(req.userId));
     }
+
+    post.numLikes = Object.keys(post.likes).length;
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
         new: true,

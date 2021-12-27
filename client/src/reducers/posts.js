@@ -9,6 +9,7 @@ import {
     DELETE,
     START_LOADING,
     STOP_LOADING,
+    RESET_POST_STATE,
 } from "../constants/actionTypes";
 
 // reducer is used to change the state of store data to allow for rerendering depending on the action passed
@@ -51,6 +52,10 @@ const postsReducer = (state = { isLoading: true, posts: [] }, action) => {
             };
         case DELETE:
             return { ...state, posts: state.posts.filter((post) => post._id !== action.payload) };
+        case RESET_POST_STATE:
+            // need to reset post state for specific cases, like when you are opening a new post, but the old post state is currently saved
+            // and will be rendered first before the actual post you clicked on
+            return { ...state, post: null };
         default:
             return state;
     }

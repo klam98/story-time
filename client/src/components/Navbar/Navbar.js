@@ -22,7 +22,6 @@ function Navbar() {
 
         // need to set user to null after logging out
         setUser(null);
-        window.location.reload();
     };
 
     useEffect(() => {
