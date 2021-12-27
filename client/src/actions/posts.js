@@ -31,7 +31,7 @@ export const getPost = (id) => async (dispatch) => {
     }
 };
 
-export const getPosts = (page) => async (dispatch) => {
+export const getPosts = (page, sort) => async (dispatch) => {
     try {
         // need a way to communicate with reducers of when to start and stop loading fetch request
         dispatch({ type: START_LOADING });
@@ -39,7 +39,7 @@ export const getPosts = (page) => async (dispatch) => {
         // fetching posts from API and then dispatching it through the action payload for the reducer to handle
         const {
             data: { data, currentPage, numberOfPages },
-        } = await api.getPosts(page);
+        } = await api.getPosts(page, sort);
         dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
 
         dispatch({ type: STOP_LOADING });
