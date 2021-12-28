@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+const API = axios.create({ baseURL: API_ENDPOINT });
+
 // production url
-const API = axios.create({ baseURL: "https://story-time-blog.herokuapp.com" });
+// const API = axios.create({ baseURL: "https://story-time-api.herokuapp.com" });
 
 // dev/testing url
 // const API = axios.create({ baseURL: "http://localhost:5000" });
