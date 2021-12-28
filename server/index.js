@@ -15,7 +15,11 @@ export const AUTH_SECRET = process.env.AUTH_SECRET;
 // To parse the incoming requests with JSON payloads, but we need to limit 30mb of data for images sent to the server
 app.use(express.json({ limit: "20mb", extended: true }));
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
-app.use(cors());
+app.use(
+    cors({
+        origin: ["http://localhost:3000", "https://story-time-web.netlify.app"],
+    })
+);
 
 // add a prefix of /posts to all routes in postRoutes
 app.use("/posts", postRoutes);
