@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // production url
-// const API = axios.create({ baseURL: "https://story-time-blog.herokuapp.com" });
+const API = axios.create({ baseURL: "https://story-time-api.herokuapp.com" });
 
 // dev/testing url
-const API = axios.create({ baseURL: "http://localhost:5000" });
+// const API = axios.create({ baseURL: "http://localhost:5000" });
 
 // have to send token back to our server and middleware to verify if the user is logged in
 API.interceptors.request.use((req) => {
