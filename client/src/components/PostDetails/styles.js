@@ -23,7 +23,8 @@ export default makeStyles((theme) => ({
     imageSection: {
         marginLeft: "20px",
         [theme.breakpoints.down("sm")]: {
-            marginLeft: 0,
+            marginLeft: "0px",
+            marginTop: "20px",
         },
     },
     recommendedPosts: {

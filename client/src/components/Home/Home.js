@@ -45,7 +45,8 @@ function Home() {
     const [currentId, setCurrentId] = useState(0);
     const [search, setSearch] = useState("");
     const [tags, setTags] = useState([]);
-    const [sortType, setSortType] = useState("newest");
+    const [sortType, setSortType] = useState(sort);
+    const [isSortInvalid, setIsSortInvalid] = useState(false);
 
     const searchPost = () => {
         if (search.trim() || tags) {
@@ -60,7 +61,10 @@ function Home() {
     const sortPosts = () => {
         // don't need to dispatch getPosts() here since after navigating, Home will call Paginate
         // which will then render page 1 in the desired sorted order
-        navigate(`/posts?page=1&sort=${sortType}`);
+
+        if (!isSortInvalid) {
+            navigate(`/posts?page=1&sort=${sortType}`);
+        }
     };
 
     const handleKeyPress = (e) => {
@@ -89,6 +93,7 @@ function Home() {
     // but did not actually click the sort button to switch the sorting
     useEffect(() => {
         setSortType(sort);
+        setIsSortInvalid(false);
     }, [page]);
 
     return (
@@ -141,7 +146,12 @@ function Home() {
                                         name="sort"
                                         label="Sort Stories"
                                         value={sortType}
-                                        onChange={(e) => setSortType(e.target.value)}
+                                        onChange={(e) => {
+                                            setSortType(e.target.value);
+                                            if (e.target.value !== sort) {
+                                                setIsSortInvalid(false);
+                                            }
+                                        }}
                                     >
                                         <MenuItem
                                             className={classes.sortingOption}
@@ -171,13 +181,29 @@ function Home() {
                                 </FormControl>
                             </Paper>
                             <Button
-                                onClick={sortPosts}
+                                onClick={() => {
+                                    if (Number(page) === 1 && sort === sortType) {
+                                        setIsSortInvalid(true);
+                                    } else {
+                                        sortPosts();
+                                        setIsSortInvalid(false);
+                                    }
+                                }}
                                 className={classes.sortButton}
                                 variant="contained"
                                 color="primary"
                             >
                                 Sort
                             </Button>
+                            {isSortInvalid && (
+                                <Typography
+                                    className={classes.sortWarning}
+                                    variant="body2"
+                                    align="center"
+                                >
+                                    {`Already sorting stories by ${sort}.`}
+                                </Typography>
+                            )}
                         </AppBar>
 
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
