@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Paper, Typography, CircularProgress, Divider } from "@material-ui/core";
+import { Paper, Typography, CircularProgress, Divider, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -81,15 +81,26 @@ const PostDetails = () => {
             </div>
             {recommendedPosts.length ? (
                 <div className={classes.section}>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" gutterBottom style={{ marginTop: "20px" }}>
                         Similar stories you may also like:
                     </Typography>
                     <Divider />
-                    <div className={classes.recommendedPosts}>
+                    <Grid
+                        className={classes.recommendedPosts}
+                        container
+                        alignItems="stretch"
+                        spacing={3}
+                    >
                         {recommendedPosts.map(({ title, message, name, likes, mediaFile, _id }) => (
-                            <div
+                            <Grid
                                 className={classes.similarStories}
-                                style={{ margin: "20px", cursor: "pointer" }}
+                                item
+                                xs={12}
+                                sm={6}
+                                md={4}
+                                lg={3}
+                                xl={3}
+                                style={{ marginTop: "20px", cursor: "pointer" }}
                                 onClick={() => openPost(_id)}
                                 key={_id}
                             >
@@ -99,16 +110,16 @@ const PostDetails = () => {
                                 <Typography gutterBottom variant="subtitle2">
                                     {name}
                                 </Typography>
-                                <Typography gutterBottom variant="subtitle2">
-                                    {message}
+                                <Typography gutterBottom variant="subtitle2" component="p">
+                                    {message.split(" ").splice(0, 20).join(" ")}...
                                 </Typography>
                                 <Typography gutterBottom variant="subtitle1">
                                     Likes: {likes.length}
                                 </Typography>
                                 <img src={mediaFile} width="250px" />
-                            </div>
+                            </Grid>
                         ))}
-                    </div>
+                    </Grid>
                 </div>
             ) : null}
         </Paper>
