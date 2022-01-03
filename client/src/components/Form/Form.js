@@ -79,7 +79,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 900, // maxWidth
                 500, // maxHeight
                 "JPEG", // compressFormat
-                100, // quality; if no compress is needed, just set it to 100
+                80, // quality; if no compress is needed, just set it to 100
                 0, // rotation; if no rotation is needed, just set it to 0
                 (uri) => {
                     resolve(uri);
